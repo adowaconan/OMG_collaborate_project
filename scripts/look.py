@@ -7,7 +7,7 @@ Created on Mon Mar 26 17:39:47 2018
 
 import os
 import pandas as pd
-os.chdir('C:\\Users\\install\\Downloads\\OMGEmotionChallenge-master\\OMGEmotionChallenge-master\\')
+os.chdir('D:\\NING - spindle\\OMG_collaborate_project\\CSVs\\')
 transcript_train = pd.read_csv('omg_TrainTranscripts.csv')
 Video_train = pd.read_csv('omg_TrainVideos.csv')
 import matplotlib.pyplot as plt
@@ -24,7 +24,7 @@ sns.pairplot(Video_train[['utterance', 'arousal', 'valence','duration','EmotionM
 df = pd.concat([transcript_train,Video_train],axis=1)
 df = df.T.drop_duplicates().T
 # get the annotation folder and its subfolders
-annotation_folder = 'C:\\Users\\install\\Downloads\\OMGEmotionChallenge-master\\OMGEmotionChallenge-master\\DetailedAnnotation\\train'
+annotation_folder = 'D:\\NING - spindle\\OMG_collaborate_project\\DetailedAnnotation\\train\\'
 os.listdir(annotation_folder)
 # print the number of videos and links
 print('# of video:',len(pd.unique(df['video'])),', # of link:',len(pd.unique(df['link'])))
