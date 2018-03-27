@@ -38,14 +38,17 @@ for ii,((v,l),d) in enumerate(df.groupby(['video','link'])):# 231 independent da
 samples = df.sample(100)
 sns.pairplot(samples[['utterance', 'arousal', 'valence','duration','EmotionMaxVote']],hue='EmotionMaxVote')
 
-
+from sklearn.preprocessing import LabelEncoder
+df['encode'] = LabelEncoder().fit_transform(df['link'])# different computer might encode the links differently
 
 # download videos and we will cut the video according to the starts and stops from the dataframe
-from pytube import YouTube
+from pytube import YouTube #https://github.com/nficano/pytube
+from tqdm import tqdm
 #where to save
 SAVE_PATH = "D:/OMG" #to_do
-links =  pd.unique(df['link'])
-for link in links:
+links =  pd.unique(df['link'])# 125 unique videos
+names = pd.unique(df['encode'])# 125 unique names in numbers
+for link,name in tqdm(zip(links,names)):
     try:
         #object creation using YouTube which was imported in the beginning
         yt = YouTube(link)
@@ -53,12 +56,15 @@ for link in links:
         print("Connection Error") #to handle exception
      
     #filters out all the files with "mp4" extension
-    mp4files = yt.filter('mp4')
-    #get the video with the extension and resolution passed in the get() function
-    d_video = yt.get(mp4files[-1].extension,mp4files[-1].resolution)
+    mp4files = (yt.streams
+                  .filter(progressive=True, file_extension='mp4')
+                  .order_by('resolution')
+                  .desc()
+                  .first())
+    
     try:
         #downloading the video
-        d_video.download(SAVE_PATH)
+        mp4files.download(SAVE_PATH,filename='%d.mp4'%name)
     except:
         print("Some Error!")
 print('Task Completed!')
