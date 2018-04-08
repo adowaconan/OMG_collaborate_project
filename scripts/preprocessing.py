@@ -49,6 +49,7 @@ for video in videos:# for each of the full video
         success,image = vidcap.read()# read one frame of a video, if keep running the same line, it will iter through all the frames
         count = 0
         success = True
+        sample_interval = 6
         while success:
             # define the name of the frame
             for_join = "%d_%s_frame%d.jpg"%(encode_name,
@@ -58,8 +59,9 @@ for video in videos:# for each of the full video
             frame_name = os.path.join(frame_dir+'/%d'%(E),for_join)
             # save the frame
             cv2.imwrite(frame_name,image)
-            # move to the next frame, if exist any
-            success,image=vidcap.read()
+            for _ in range(sample_interval):
+                # move to the next frame, if exist any
+                success,image=vidcap.read()
             print('Read a new frame: ', success)
             count += 1    
         
