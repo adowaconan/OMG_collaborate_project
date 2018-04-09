@@ -29,7 +29,7 @@ df = df.T.drop_duplicates().T
 
 from sklearn.preprocessing import LabelEncoder
 df['encode'] = LabelEncoder().fit_transform(df['link'])# different computer might encode the links differently
-
+df.to_csv('df_concat.csv',index=False)
 # download videos and we will cut the video according to the starts and stops from the dataframe
 from pytube import YouTube #https://github.com/nficano/pytube
 from tqdm import tqdm
@@ -45,107 +45,17 @@ for link,name in tqdm(zip(links,names)):
         yt = YouTube(link)
     except:
         print("Connection Error") #to handle exception
-     
+
     #filters out all the files with "mp4" extension
     mp4files = (yt.streams
                   .filter(progressive=True, file_extension='mp4')
                   .order_by('resolution')
                   .desc()
                   .first())
-    
+
     try:
         #downloading the video
         mp4files.download(SAVE_PATH,filename='%d.mp4'%name)
     except:
         print("Some Error!")
 print('Task Completed!')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
