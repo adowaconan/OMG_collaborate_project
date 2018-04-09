@@ -39,6 +39,7 @@ for video in videos:# for each of the full video
     for ii,row in working_df.iterrows(): # for each clip of one full video
         t1,t2 = row[['start','end']]# get the start and end time of the clip
         E = row['EmotionMaxVote']# the class
+        # round the time to 2 decimals
         t1 = round(t1,2)
         t2 = round(t2,2)
         # define a saving name
