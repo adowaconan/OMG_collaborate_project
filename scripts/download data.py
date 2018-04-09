@@ -29,7 +29,7 @@ df = df.T.drop_duplicates().T
 
 from sklearn.preprocessing import LabelEncoder
 df['encode'] = LabelEncoder().fit_transform(df['link'])# different computer might encode the links differently
-df.to_csv('df_concat.csv',index=False)
+df.to_csv('train_concate.csv',index=False)
 # download videos and we will cut the video according to the starts and stops from the dataframe
 from pytube import YouTube #https://github.com/nficano/pytube
 from tqdm import tqdm

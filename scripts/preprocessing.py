@@ -4,6 +4,10 @@
 Created on Sat Apr  7 13:43:24 2018
 
 @author: ning
+
+This script will:
+1. Get clips (segments) of the videos one by one
+2. Get frames of each clips/segments and save these frames as individual jpgs
 """
 import cv2
 # define paths and directories
@@ -63,106 +67,4 @@ for video in videos:# for each of the full video
                 # move to the next frame, if exist any
                 success,image=vidcap.read()
             print('Read a new frame: ', success)
-            count += 1    
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            count += 1
