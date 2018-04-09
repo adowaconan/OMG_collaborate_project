@@ -25,13 +25,13 @@ import pandas as pd
 # the concatenated dataframe made before
 df = pd.read_csv(tran_dir+'train_concate.csv')
 # make more subfolders
-for EmotionMaxVote in pd.unique(df['EmotionMaxVote']):
-    if not os.path.exists(os.path.join(frame_dir,str(EmotionMaxVote))):
+for EmotionMaxVote in pd.unique(df['EmotionMaxVote']):# there are 6 unique EmotionMaxVote
+    if not os.path.exists(os.path.join(frame_dir,str(EmotionMaxVote))):# for example: /home/adowaconan/Downloads/OMG/frames/1
         os.mkdir(os.path.join(frame_dir,str(EmotionMaxVote)))
 from glob import glob
 import re
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip# function used for clipping videos
-videos = glob(os.path.join(video_path,'*mp4.mp4'))
+videos = glob(os.path.join(video_path,'*mp4.mp4'))# get files that ends with "mp4.mp4" in the video_path
 
 for video in videos:# for each of the full video
     encode_name = int(re.findall('\d+',video)[0])# get the encoded name, such as 1,2,3,...
@@ -43,22 +43,23 @@ for video in videos:# for each of the full video
         t2 = round(t2,2)
         # define a saving name
         target_name = os.path.join(saving_dir,
-                        "%d_%s"%(encode_name,row['utterance']))
+                        "%d_%s"%(encode_name,# corresponding to %d - integer placeholder
+                                 row['utterance']))# corresponding to %s - string placeholder
         # the main function to clip the video
         # https://superuser.com/questions/1228698/how-do-i-split-a-long-video-into-multiple-shorter-videos-efficiently
         ffmpeg_extract_subclip(video,t1,t2,targetname=target_name)
         # small algorithm to get the frames of a clip
         # https://stackoverflow.com/questions/33311153/python-extracting-and-saving-video-frames
-        vidcap = cv2.VideoCapture(target_name)
+        vidcap = cv2.VideoCapture(target_name)# load a video to physical memory
         success,image = vidcap.read()# read one frame of a video, if keep running the same line, it will iter through all the frames
         count = 0
         success = True
         sample_interval = 6
         while success:
             # define the name of the frame
-            for_join = "%d_%s_frame%d.jpg"%(encode_name,
-                                            row['utterance'].split('.')[0],
-                                            count)
+            for_join = "%d_%s_frame%d.jpg"%(encode_name,# corresponding to the first %d - integer placeholder
+                                            row['utterance'].split('.')[0],# corresponding to %s - string placeholder
+                                            count)# corresponding to the second %d - integer placeholder
             # join the frame directory
             frame_name = os.path.join(frame_dir+'/%d'%(E),for_join)
             # save the frame
