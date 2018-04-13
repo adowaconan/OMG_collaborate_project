@@ -8,7 +8,8 @@ Created on Sat Apr  7 12:43:11 2018
 
 import os
 import pandas as pd
-os.chdir('/home/adowaconan/Downloads')
+#os.chdir('/home/adowaconan/Downloads')
+os.chdir('C:\\Users\\ning\\OneDrive\\python works\\OMG_collaborate_project\\CSVs')
 transcript_train = pd.read_csv('omg_TrainTranscripts.csv')
 Video_train = pd.read_csv('omg_TrainVideos.csv')
 import matplotlib.pyplot as plt
@@ -34,7 +35,8 @@ df.to_csv('train_concate.csv',index=False)
 from pytube import YouTube #https://github.com/nficano/pytube
 from tqdm import tqdm
 #where to save
-SAVE_PATH = "/home/adowaconan/Downloads/OMG" #to_do
+#SAVE_PATH = "/home/adowaconan/Downloads/OMG" #to_do
+SAVE_PATH = "C:/Users/ning/Downloads/OMG" #to_do
 if not os.path.exists(SAVE_PATH):
     os.mkdir(SAVE_PATH)
 links =  pd.unique(df['link'])# 125 unique videos

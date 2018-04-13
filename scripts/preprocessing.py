@@ -15,6 +15,13 @@ video_path = "/home/adowaconan/Downloads/OMG"# videos downloaded from Youtube
 saving_dir = "/home/adowaconan/Downloads/OMG/clips"# directory for saving clips
 tran_dir = '/home/adowaconan/Downloads/'# directory where your transcript file is
 frame_dir = '/home/adowaconan/Downloads/OMG/frames'# directory for saving the frames
+
+# define paths and directories
+video_path = "C:/Users/ning/Downloads/OMG"# videos downloaded from Youtube
+saving_dir = "C:/Users/ning/Downloads/OMG/clips"# directory for saving clips
+tran_dir = 'C:\\Users\\ning\\OneDrive\\python works\\OMG_collaborate_project\\CSVs'# directory where your transcript file is
+frame_dir = 'C:/Users/ning/Downloads/OMG/frames'# directory for saving the frames
+
 import os
 os.chdir(video_path)
 if not os.path.exists(saving_dir):
@@ -53,6 +60,7 @@ for video in videos:# for each of the full video
         # https://stackoverflow.com/questions/33311153/python-extracting-and-saving-video-frames
         vidcap = cv2.VideoCapture(target_name)# load a video to physical memory
         success,image = vidcap.read()# read one frame of a video, if keep running the same line, it will iter through all the frames
+        success,image = vidcap.read()# skip the very first frame - lead to later problems
         count = 0
         success = True
         sample_interval = 6
