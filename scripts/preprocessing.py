@@ -11,10 +11,11 @@ This script will:
 """
 import cv2
 # define paths and directories
-video_path = "/home/adowaconan/Downloads/OMG"# videos downloaded from Youtube
-saving_dir = "/home/adowaconan/Downloads/OMG/clips"# directory for saving clips
-tran_dir = '/home/adowaconan/Downloads/'# directory where your transcript file is
-frame_dir = '/home/adowaconan/Downloads/OMG/frames'# directory for saving the frames
+computer = 'ning' # adowaconan
+video_path = "/home/%s/Downloads/OMG"%computer# videos downloaded from Youtube
+saving_dir = "/home/%s/Downloads/OMG/clips"%computer# directory for saving clips
+tran_dir = '/home/%s/Downloads/'%computer# directory where your transcript file is
+frame_dir = '/home/%s/Downloads/OMG/frames'%computer# directory for saving the frames
 
 # define paths and directories
 video_path = "C:/Users/ning/Downloads/OMG"# videos downloaded from Youtube
@@ -60,21 +61,25 @@ for video in videos:# for each of the full video
         # https://stackoverflow.com/questions/33311153/python-extracting-and-saving-video-frames
         vidcap = cv2.VideoCapture(target_name)# load a video to physical memory
         success,image = vidcap.read()# read one frame of a video, if keep running the same line, it will iter through all the frames
-        success,image = vidcap.read()# skip the very first frame - lead to later problems
         count = 0
         success = True
         sample_interval = 6
-        while success:
-            # define the name of the frame
-            for_join = "%d_%s_frame%d.jpg"%(encode_name,# corresponding to the first %d - integer placeholder
-                                            row['utterance'].split('.')[0],# corresponding to %s - string placeholder
-                                            count)# corresponding to the second %d - integer placeholder
-            # join the frame directory
-            frame_name = os.path.join(frame_dir+'/%d'%(E),for_join)
-            # save the frame
-            cv2.imwrite(frame_name,image)
-            for _ in range(sample_interval):
-                # move to the next frame, if exist any
-                success,image=vidcap.read()
-            print('Read a new frame: ', success)
-            count += 1
+        try:
+            while success:
+            
+                print(image.size)
+                # define the name of the frame
+                for_join = "%d_%s_frame%d.jpg"%(encode_name,# corresponding to the first %d - integer placeholder
+                                                row['utterance'].split('.')[0],# corresponding to %s - string placeholder
+                                                count)# corresponding to the second %d - integer placeholder
+                # join the frame directory
+                frame_name = os.path.join(frame_dir+'/%d'%(E),for_join)
+                # save the frame
+                cv2.imwrite(frame_name,image)
+                for _ in range(sample_interval):
+                    # move to the next frame, if exist any
+                    success,image=vidcap.read()
+                print('Read a new frame: ', success)
+                count += 1
+        except:
+            print(target_name)
