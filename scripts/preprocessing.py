@@ -39,6 +39,9 @@ for EmotionMaxVote in pd.unique(df['EmotionMaxVote']):# there are 6 unique Emoti
 from glob import glob
 import re
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip# function used for clipping videos
+from vidpy import Clip # alternative for clipping videos
+from vidpy import config
+config.MELT_BINARY = '/usr/bin/melt'
 videos = glob(os.path.join(video_path,'*mp4.mp4'))# get files that ends with "mp4.mp4" in the video_path
 
 for video in videos:# for each of the full video
@@ -56,7 +59,11 @@ for video in videos:# for each of the full video
                                  row['utterance']))# corresponding to %s - string placeholder
         # the main function to clip the video
         # https://superuser.com/questions/1228698/how-do-i-split-a-long-video-into-multiple-shorter-videos-efficiently
-        ffmpeg_extract_subclip(video,t1,t2,targetname=target_name)
+#        ffmpeg_extract_subclip(video,t1,t2,targetname=target_name)
+        # alternative:
+        # https://antiboredom.github.io/vidpy/installation.html#setup
+        temp_segment = Clip(video,start=t1,end=t2,)
+        temp_segment.save(target_name)
         # small algorithm to get the frames of a clip
         # https://stackoverflow.com/questions/33311153/python-extracting-and-saving-video-frames
         vidcap = cv2.VideoCapture(target_name)# load a video to physical memory
