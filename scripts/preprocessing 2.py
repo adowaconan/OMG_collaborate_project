@@ -4,8 +4,8 @@ Created on Fri Apr 13 17:32:32 2018
 
 @author: ning
 """
-
-image_dir = 'C:\\Users\\ning\\Downloads\\OMG\\frames'
+computer = 'ning'
+image_dir = '/home/%s/Downloads/OMG/frames'%computer# directory for saving the frames
 import os
 import numpy as np
 from glob import glob
@@ -23,5 +23,9 @@ for n in range(7):
             with Image.open(image) as im:
                 x, y = im.size
                 temp.append([n,x,y])
+                
+                if (x < 450) and (y < 300):
+                    c  = im
+                    break
         except:
             print(image)
