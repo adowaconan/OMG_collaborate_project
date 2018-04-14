@@ -17,11 +17,11 @@ saving_dir = "/home/%s/Downloads/OMG/clips"%computer# directory for saving clips
 tran_dir = '/home/%s/Downloads/'%computer# directory where your transcript file is
 frame_dir = '/home/%s/Downloads/OMG/frames'%computer# directory for saving the frames
 
-# define paths and directories
-video_path = "C:/Users/ning/Downloads/OMG"# videos downloaded from Youtube
-saving_dir = "C:/Users/ning/Downloads/OMG/clips"# directory for saving clips
-tran_dir = 'C:\\Users\\ning\\OneDrive\\python works\\OMG_collaborate_project\\CSVs'# directory where your transcript file is
-frame_dir = 'C:/Users/ning/Downloads/OMG/frames'# directory for saving the frames
+## define paths and directories
+#video_path = "C:/Users/ning/Downloads/OMG"# videos downloaded from Youtube
+#saving_dir = "C:/Users/ning/Downloads/OMG/clips"# directory for saving clips
+#tran_dir = 'C:\\Users\\ning\\OneDrive\\python works\\OMG_collaborate_project\\CSVs'# directory where your transcript file is
+#frame_dir = 'C:/Users/ning/Downloads/OMG/frames'# directory for saving the frames
 
 import os
 os.chdir(video_path)
@@ -37,17 +37,18 @@ for EmotionMaxVote in pd.unique(df['EmotionMaxVote']):# there are 6 unique Emoti
     if not os.path.exists(os.path.join(frame_dir,str(EmotionMaxVote))):# for example: /home/adowaconan/Downloads/OMG/frames/1
         os.mkdir(os.path.join(frame_dir,str(EmotionMaxVote)))
 from glob import glob
+from tqdm import tqdm
 import re
-from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip# function used for clipping videos
+#from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip# function used for clipping videos
 from vidpy import Clip # alternative for clipping videos
 from vidpy import config
 config.MELT_BINARY = '/usr/bin/melt'
 videos = glob(os.path.join(video_path,'*mp4.mp4'))# get files that ends with "mp4.mp4" in the video_path
 
-for video in videos:# for each of the full video
+for video in tqdm(videos,desc='video loop'):# for each of the full video
     encode_name = int(re.findall('\d+',video)[0])# get the encoded name, such as 1,2,3,...
     working_df = df[df.encode==encode_name]# get rows that correspond to the same video
-    for ii,row in working_df.iterrows(): # for each clip of one full video
+    for ii,row in tqdm(working_df.iterrows(),desc='within video loop'): # for each clip of one full video
         t1,t2 = row[['start','end']]# get the start and end time of the clip
         E = row['EmotionMaxVote']# the class
         # round the time to 2 decimals
