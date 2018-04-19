@@ -3,6 +3,11 @@
 Created on Fri Apr 13 17:32:32 2018
 
 @author: ning
+
+run this in the terminal first:
+    pip install --upgrade keras
+    
+making sure you use keras 2.1.5
 """
 # define working and saving directories
 computer = 'ning'
